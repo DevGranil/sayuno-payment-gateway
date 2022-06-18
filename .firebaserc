@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "sayuno-app",
+    "payment-gateway": "sayuno-app"
+  },
+  "targets": {}
+}
