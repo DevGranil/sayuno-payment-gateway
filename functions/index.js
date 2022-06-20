@@ -12,6 +12,7 @@ exports.stripeCheckout = functions.https.onCall(async(data, context) => {
    
     var price = doc.data().price;
     var name = doc.data().name;
+    var description = doc.data().description;
    
  
 
@@ -20,7 +21,7 @@ exports.stripeCheckout = functions.https.onCall(async(data, context) => {
         payment_method_types: ['card'],
         line_items: [{
             name: name,
-            description: 'description',
+            description: description,
             amount: Math.round(price * 100),
             currency: 'gbp',
             quantity: 1
@@ -29,6 +30,38 @@ exports.stripeCheckout = functions.https.onCall(async(data, context) => {
         mode: 'payment',
         success_url: 'http://localhost:4200/app/plans?action=success',
         cancel_url: 'http://localhost:4200/app/plans?action=cancel'
+    })
+
+    return session.id;
+})
+
+exports.stripeCheckoutProd = functions.https.onCall(async(data, context) => {
+
+    var db = admin.firestore();
+    var productId = data['id'];
+    console.log(productId)
+    var doc = await db.collection('price-plans').doc(productId).get();
+   
+    var price = doc.data().price;
+    var name = doc.data().name;
+    var description = doc.data().description;
+   
+ 
+
+
+    const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items: [{
+            name: name,
+            description: description,
+            amount: Math.round(price * 100),
+            currency: 'gbp',
+            quantity: 1
+
+        }],
+        mode: 'payment',
+        success_url: 'https://sayuno-app.web.app/app/plans?action=success',
+        cancel_url: 'https://sayuno-app.web.app/app/plans?action=cancel'
     })
 
     return session.id;
