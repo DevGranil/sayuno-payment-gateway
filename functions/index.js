@@ -28,8 +28,8 @@ exports.stripeCheckout = functions.https.onCall(async(data, context) => {
 
         }],
         mode: 'payment',
-        success_url: 'http://localhost:4200/app/plans?action=success',
-        cancel_url: 'http://localhost:4200/app/plans?action=cancel'
+        success_url: 'http://localhost:4200/app/plans?action=success&session_id={CHECKOUT_SESSION_ID}',
+        cancel_url: 'http://localhost:4200/app/plans?action=cancel&session_id={CHECKOUT_SESSION_ID}'
     })
 
     return session;
@@ -60,8 +60,8 @@ exports.stripeCheckoutProd = functions.https.onCall(async(data, context) => {
 
         }],
         mode: 'payment',
-        success_url: 'https://sayuno-app.web.app/app/plans?action=success',
-        cancel_url: 'https://sayuno-app.web.app/app/plans?action=cancel'
+        success_url: 'https://sayuno-app.web.app/app/plans?action=success&session_id={CHECKOUT_SESSION_ID}',
+        cancel_url: 'https://sayuno-app.web.app/app/plans?action=cancel&session_id={CHECKOUT_SESSION_ID}'
     })
 
     return session;
