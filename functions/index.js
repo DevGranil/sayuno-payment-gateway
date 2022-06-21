@@ -32,7 +32,7 @@ exports.stripeCheckout = functions.https.onCall(async(data, context) => {
         cancel_url: 'http://localhost:4200/app/plans?action=cancel'
     })
 
-    return session.id;
+    return session;
 })
 
 exports.stripeCheckoutProd = functions.https.onCall(async(data, context) => {
@@ -64,5 +64,5 @@ exports.stripeCheckoutProd = functions.https.onCall(async(data, context) => {
         cancel_url: 'https://sayuno-app.web.app/app/plans?action=cancel'
     })
 
-    return session.id;
+    return session;
 })
